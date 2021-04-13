@@ -27,7 +27,7 @@ export class CollisionUitls {
         const w = shap.width;
         const h = shap.height;
 
-        console.log(`w is ${w} and h is ${h}`);
+        // console.log(`w is ${w} and h is ${h}`);
  
  
         const p1x = -w / 2;
@@ -42,26 +42,35 @@ export class CollisionUitls {
         const p4x = -w / 2;
         const p4y = h / 2;
 
-        console.log(`a is ${a} b is ${b} c is ${c} d is ${d},tx is ${tx} ty is ${ty}`);
+        // console.log(`a is ${a} b is ${b} c is ${c} d is ${d},tx is ${tx} ty is ${ty}`);
  
  
         // a: 缩放或者旋转图像是影响沿x轴定位的值
         // b: 旋转或者倾斜影响y轴定位的值
         // 对x坐标有影响的值为a 和 c的值
         // 对y坐标有影响的值为b 和 d的值
-        const p1 = { x: a * p1x + b * p1y + tx, y: c * p1x + d * p1y + ty };
-        const p2 = { x: a * p2x + b * p2y + tx, y: c * p2x + d * p2y + ty };
-        const p3 = { x: a * p3x + b * p3y + tx, y: c * p3x + d * p3y + ty };
-        const p4 = { x: a * p4x + b * p4y + tx, y: c * p4x + d * p4y + ty };
+        // const p1 = { x: a * p1x + b * p1y + tx, y: c * p1x + d * p1y + ty };
+        // const p2 = { x: a * p2x + b * p2y + tx, y: c * p2x + d * p2y + ty };
+        // const p3 = { x: a * p3x + b * p3y + tx, y: c * p3x + d * p3y + ty };
+        // const p4 = { x: a * p4x + b * p4y + tx, y: c * p4x + d * p4y + ty };
 
+        const angle = shap.angle;
+        const ra = (Math.PI * angle) / 180;
         const transPos = (p: IPoint) => {
             const p1Pos = shap.convertToWorldSpaceAR(cc.v2(p.x,p.y));
             const p1Local = parentNode.convertToNodeSpaceAR(p1Pos);
 
+            const shapCenter = shap.parent.convertToWorldSpaceAR(shap.getPosition());
+            
+            // const x1 = (p1Pos.x - shapCenter.x) * Math.cos(ra) - (p1Pos.y - shapCenter.y) * Math.sin(ra) + shapCenter.x;
+            // const y1 = (p1Pos.y - shapCenter.y) * Math.cos(ra) + (p1Pos.x - shapCenter.x) * Math.sin(ra) + shapCenter.y;
+            
+            
+
             return {x: p1Local.x,y: p1Local.y};
         }
  
-        return [transPos(p1),transPos(p2),transPos(p3),transPos(p4)];
+        return [transPos({x: p1x,y: p1y}),transPos({x: p2x,y: p2y}),transPos({x: p3x,y: p3y}),transPos({x: p4x,y: p4y})];
     }
  
     /**

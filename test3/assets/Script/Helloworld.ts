@@ -42,23 +42,33 @@ export default class Helloworld extends cc.Component {
 
         // this.s.angle = 30;
 
+        // this.
+
         
+        console.log(this.fivePolygon);
+        // this.drawPath(this.fivePolygon,this.five,this.penB,cc.Color.GREEN);
+
+        this.five.angle = 90;
+        this.fivePolygon = CollisionUitls.getRectangleVerPoints(this.five,this.node);
+
+        console.log(this.fivePolygon);
         this.drawPath(this.fivePolygon,this.five,this.penB);
+        
         // this.drawPath(this.sPolygon,this.s,this.pen);
 
-        const sChildren = this.s.children;
-        for(let i = 0; i < sChildren.length; i++) {
-            const worldPos = sChildren[i].parent.convertToWorldSpaceAR(sChildren[i].getPosition());
-            const localPos = this.pen.node.convertToNodeSpaceAR(worldPos);
-            // const localPos = sChildren[i].getPosition();
-            if(i === 0) {
-                this.pen.moveTo(localPos.x,localPos.y);
-            } else {
-                this.pen.lineTo(localPos.x,localPos.y);
-            }
-        }
-        this.pen.close();
-        this.pen.stroke();
+        // const sChildren = this.s.children;
+        // for(let i = 0; i < sChildren.length; i++) {
+        //     const worldPos = sChildren[i].parent.convertToWorldSpaceAR(sChildren[i].getPosition());
+        //     const localPos = this.pen.node.convertToNodeSpaceAR(worldPos);
+        //     // const localPos = sChildren[i].getPosition();
+        //     if(i === 0) {
+        //         this.pen.moveTo(localPos.x,localPos.y);
+        //     } else {
+        //         this.pen.lineTo(localPos.x,localPos.y);
+        //     }
+        // }
+        // this.pen.close();
+        // this.pen.stroke();
 
         this.schedule(() => {
             // this.drawPath(this.sPolygon,this.s,this.pen);
@@ -87,11 +97,12 @@ export default class Helloworld extends cc.Component {
 
     }
 
-    drawPath(posArr: IPoint[],parentNode: cc.Node,pen: cc.Graphics) {
+    drawPath(posArr: IPoint[],parentNode: cc.Node,pen: cc.Graphics,color: cc.Color = cc.Color.RED) {
         
         const len = posArr.length;
 
-        pen.clear();
+        pen.strokeColor = color || new cc.Color(200,200,100,255);
+        // pen.clear();
         for(let i = 0; i < len; i++) {
             const posItem = cc.v2(posArr[i].x,posArr[i].y);
 
